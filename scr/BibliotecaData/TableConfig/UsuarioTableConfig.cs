@@ -14,7 +14,7 @@ namespace BibliotecaData.TableConfig
 
             builder.Property(usuario => usuario.Nome)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(30);
 
             builder.Property(usuario => usuario.Nascimento)
                 .IsRequired()
@@ -35,6 +35,11 @@ namespace BibliotecaData.TableConfig
             builder.Property(usuario => usuario.DataCriacao)
               .IsRequired()
               .HasMaxLength(15);
+
+            builder.HasMany<Tarefa>()
+                .WithOne()
+                .HasForeignKey(tarefa => tarefa.GestorId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany<Tarefa>()
                 .WithOne()
