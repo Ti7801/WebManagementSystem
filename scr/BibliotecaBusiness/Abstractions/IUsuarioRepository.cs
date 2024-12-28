@@ -5,6 +5,6 @@ namespace BibliotecaBusiness.Abstractions
     public interface IUsuarioRepository
     {
         public void AdicionarUsuario(Usuario usuario);
-        public Usuario ObterUsuario();
+        public Usuario? ObterUsuario(Guid id);
     }
 }
