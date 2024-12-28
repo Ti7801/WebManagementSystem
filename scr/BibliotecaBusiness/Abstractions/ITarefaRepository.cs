@@ -1,6 +1,10 @@
-﻿namespace BibliotecaBusiness.Abstractions
+﻿using BibliotecaBusiness.Models;
+
+namespace BibliotecaBusiness.Abstractions
 {
-    public class ITarefaRepository
+    public interface ITarefaRepository
     {
+        public void AdicionarTarefa(Tarefa tarefa);
+        public Tarefa ObterTarefa();
     }
 }
