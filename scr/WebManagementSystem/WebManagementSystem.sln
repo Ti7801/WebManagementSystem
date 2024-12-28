@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebManagementSystem", "WebManagementSystem.csproj", "{2468D05A-B00B-4074-BFDC-AB475DED2B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebManagementSystem", "WebManagementSystem.csproj", "{2468D05A-B00B-4074-BFDC-AB475DED2B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibliotecaBusiness", "..\BibliotecaBusiness\BibliotecaBusiness.csproj", "{B9EA73B6-69CC-488B-BBC7-7BC06E1A58B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaBusiness", "..\BibliotecaBusiness\BibliotecaBusiness.csproj", "{B9EA73B6-69CC-488B-BBC7-7BC06E1A58B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibliotecaData", "..\BibliotecaData\BibliotecaData.csproj", "{3C79D25C-8AE1-4E22-B079-ECB881B2A910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotecaData", "..\BibliotecaData\BibliotecaData.csproj", "{3C79D25C-8AE1-4E22-B079-ECB881B2A910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
