@@ -10,5 +10,6 @@ namespace BibliotecaBusiness.Models
         public DateTime DataConclusao { get; set; }
         public StatusTarefa StatusTarefa { get; set; }
         public Guid GestorId { get; set; }
+        public Guid? UsuarioId { get; set; }
     }
 }
