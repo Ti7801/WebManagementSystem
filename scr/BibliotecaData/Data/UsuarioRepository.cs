@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BibliotecaBusiness.Abstractions;
+using BibliotecaBusiness.Models;
+
 
 namespace BibliotecaData.Data
 {
-    internal class UsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
+        private readonly AppDbContext appDbContext; 
+
+        public UsuarioRepository(AppDbContext appDbContext)
+        {
+            this.appDbContext = appDbContext;   
+        } 
+
+        public void AdicionarUsuario(Usuario usuario)
+        {
+            appDbContext.Usuarios.Add(usuario); 
+            appDbContext.SaveChanges(); 
+        }
+
+        public Usuario? ObterUsuario(Guid id)
+        {
+            Usuario? usuario = appDbContext.Usuarios.Where(x => x.Id == id).SingleOrDefault();
+
+            return usuario; 
+        }
+
     }
 }
