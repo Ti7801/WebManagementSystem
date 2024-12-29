@@ -13,6 +13,7 @@ namespace BibliotecaBusiness.Mappers
             usuario.Nome = viewModel.Nome;
             usuario.Nascimento = viewModel.Nascimento;
             usuario.Telefone = viewModel.Telefone;
+            usuario.Celular = viewModel.Celular;
             usuario.Email = viewModel.Email;
             usuario.Endereco = viewModel.Endereco;
             usuario.Foto = viewModel.Foto;
@@ -28,6 +29,7 @@ namespace BibliotecaBusiness.Mappers
             viewModel.Nome = usuario.Nome;
             viewModel.Nascimento = usuario.Nascimento;
             viewModel.Telefone = usuario.Telefone;
+            viewModel.Celular = usuario.Celular;
             viewModel.Email = usuario.Email;
             viewModel.Endereco = usuario.Endereco;
             viewModel.Foto = usuario.Foto;
