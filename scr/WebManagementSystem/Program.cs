@@ -18,12 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(
 );
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<CadastrarUsuarioService>();
-builder.Services.AddScoped<ConsultarUsuarioService>();
+builder.Services.AddScoped<UsuarioService>();
 
 builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
-builder.Services.AddScoped<CadastrarTarefaService>();
-builder.Services.AddScoped<ConsultarTarefaService>();
+builder.Services.AddScoped<TarefaService>();
 
 var app = builder.Build();
 
