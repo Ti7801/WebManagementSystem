@@ -1,0 +1,38 @@
+﻿@model WebManagementSystem.ViewModels.TarefaViewModel
+
+<h3>
+    Cadastro de Tarefa
+</h3>
+
+<form asp-action="CadastrarTarefa" asp-antiforgery="true" method="post">
+    <div class="form-group">
+        <label asp-for="Messagem"></label>
+        <input asp-for="Messagem" class="form-control" placeholder="Descrição" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataCriacao"></label>
+        <input asp-for="DataCriacao" type="date" class="form-control" placeholder="Informe a Data de Cria" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DataConclusao"></label>
+        <input asp-for="DataConclusao" class="form-control" placeholder="Informe o Telefone" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StatusTarefa"></label>
+        <input asp-for="StatusTarefa" class="form-control" placeholder="Informe o Email" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GestorId"></label>
+        <input asp-for="GestorId" class="form-control" placeholder="Informe o código do Gestor" />
+    </div>
+
+    </br>
+
+    <div>
+        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+    </div>
+</form>
