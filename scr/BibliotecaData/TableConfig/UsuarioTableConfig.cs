@@ -14,7 +14,7 @@ namespace BibliotecaData.TableConfig
 
             builder.Property(usuario => usuario.Nome)
                 .IsRequired()
-                .HasMaxLength(30);
+                .HasMaxLength(80);
 
             builder.Property(usuario => usuario.Nascimento)
                 .IsRequired()
@@ -22,19 +22,22 @@ namespace BibliotecaData.TableConfig
 
             builder.Property(usuario => usuario.Telefone)
                 .IsRequired()
-                .HasMaxLength(30);
+                .HasMaxLength(50);
+
+            builder.Property(usuario => usuario.Celular)
+                .IsRequired()
+                .HasMaxLength(50);
 
             builder.Property(usuario => usuario.Email)
                 .IsRequired()
-                .HasMaxLength(15);
+                .HasMaxLength(70);
 
             builder.Property(usuario => usuario.Endereco)
               .IsRequired()
-              .HasMaxLength(15);
+              .HasMaxLength(100);
 
-            builder.Property(usuario => usuario.DataCriacao)
-              .IsRequired()
-              .HasMaxLength(15);
+            builder.Property(usuario => usuario.Foto)
+                .IsRequired();
 
             builder.HasMany<Tarefa>()
                 .WithOne()
