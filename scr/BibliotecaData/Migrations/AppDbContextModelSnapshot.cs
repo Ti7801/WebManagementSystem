@@ -36,16 +36,16 @@ namespace BibliotecaData.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
                     b.Property<Guid>("GestorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Messagem")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<int>("StatusTarefa")
-                        .HasMaxLength(15)
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<Guid?>("UsuarioId")
@@ -66,19 +66,24 @@ namespace BibliotecaData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasMaxLength(15)
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<string>("Endereco")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Foto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Nascimento")
                         .HasMaxLength(30)
@@ -86,13 +91,13 @@ namespace BibliotecaData.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
