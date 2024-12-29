@@ -12,9 +12,9 @@ namespace BibliotecaData.TableConfig
 
             builder.HasKey(tarefa => tarefa.Id);
 
-            builder.Property(tarefa => tarefa.Descricao)
+            builder.Property(tarefa => tarefa.Messagem)
                 .IsRequired()
-                .HasMaxLength(300);
+                .HasMaxLength(500);
 
             builder.Property(tarefa => tarefa.DataCriacao)
                 .IsRequired()
@@ -26,7 +26,7 @@ namespace BibliotecaData.TableConfig
 
             builder.Property(tarefa => tarefa.StatusTarefa)
                 .IsRequired()
-                .HasMaxLength(15);
+                .HasMaxLength(50);
         }
     }
 }
