@@ -1,0 +1,39 @@
+﻿using BibliotecaBusiness.Models;
+using WebManagementSystem.ViewModels;
+
+namespace WebManagementSystem.Mappers
+{
+    public class TarefaMapper
+    {
+        public static Tarefa Map(TarefaViewModel viewModel)
+        {
+            Tarefa tarefa = new Tarefa();
+
+            tarefa.Id = viewModel.Id;
+            tarefa.Messagem = viewModel.Messagem;
+            tarefa.DataCriacao = viewModel.DataCriacao;
+            tarefa.DataConclusao = viewModel.DataConclusao;
+            tarefa.StatusTarefa = viewModel.StatusTarefa;
+            tarefa.GestorId = viewModel.GestorId;
+            tarefa.UsuarioId = viewModel.UsuarioId; 
+
+            return tarefa;
+        }
+
+        public static TarefaViewModel Map(Tarefa tarefa)
+        {
+            TarefaViewModel viewModel = new TarefaViewModel();
+
+            viewModel.Id = tarefa.Id;
+            viewModel.Messagem = tarefa.Messagem;
+            viewModel.DataCriacao = tarefa.DataCriacao;
+            viewModel.DataConclusao = tarefa.DataConclusao;
+            viewModel.StatusTarefa = tarefa.StatusTarefa;
+            viewModel.GestorId = tarefa.GestorId;
+            viewModel.UsuarioId = tarefa.UsuarioId;
+
+            return viewModel;
+        }
+
+    }
+}
