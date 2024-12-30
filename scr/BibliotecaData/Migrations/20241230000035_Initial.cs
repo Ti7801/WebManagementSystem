@@ -35,8 +35,7 @@ namespace BibliotecaData.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Messagem = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", maxLength: 30, nullable: false),
-                    DataConclusao = table.Column<DateTime>(type: "datetime2", maxLength: 30, nullable: false),
+                    DataLimiteExecucao = table.Column<DateTime>(type: "datetime2", maxLength: 30, nullable: false),
                     StatusTarefa = table.Column<int>(type: "int", maxLength: 50, nullable: false),
                     GestorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)

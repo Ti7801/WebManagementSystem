@@ -28,11 +28,7 @@ namespace BibliotecaData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataConclusao")
-                        .HasMaxLength(30)
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTime>("DataLimiteExecucao")
                         .HasMaxLength(30)
                         .HasColumnType("datetime2");
 

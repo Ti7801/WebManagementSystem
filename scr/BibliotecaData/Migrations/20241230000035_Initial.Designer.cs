@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BibliotecaData.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241229015929_Initial")]
+    [Migration("20241230000035_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -31,11 +31,7 @@ namespace BibliotecaData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataConclusao")
-                        .HasMaxLength(30)
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCriacao")
+                    b.Property<DateTime>("DataLimiteExecucao")
                         .HasMaxLength(30)
                         .HasColumnType("datetime2");
 

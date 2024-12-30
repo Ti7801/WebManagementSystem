@@ -9,9 +9,7 @@ namespace WebManagementSystem.ViewModels
         [Required]
         public string Messagem { get; set; }
         [Required]
-        public DateTime DataCriacao { get; set; }
-        [Required]
-        public  DateTime DataConclusao { get; set; }
+        public  DateTime DataLimiteExecucao { get; set; }
         [Required]
         public StatusTarefa StatusTarefa { get; set; }
         [Required]

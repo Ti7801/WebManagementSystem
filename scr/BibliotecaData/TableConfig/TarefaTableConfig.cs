@@ -16,11 +16,7 @@ namespace BibliotecaData.TableConfig
                 .IsRequired()
                 .HasMaxLength(500);
 
-            builder.Property(tarefa => tarefa.DataCriacao)
-                .IsRequired()
-                .HasMaxLength(30);
-
-            builder.Property(tarefa => tarefa.DataConclusao)
+            builder.Property(tarefa => tarefa.DataLimiteExecucao)
                 .IsRequired()
                 .HasMaxLength(30);
 

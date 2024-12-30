@@ -11,8 +11,7 @@ namespace WebManagementSystem.Mappers
 
             tarefa.Id = viewModel.Id;
             tarefa.Messagem = viewModel.Messagem;
-            tarefa.DataCriacao = viewModel.DataCriacao;
-            tarefa.DataConclusao = viewModel.DataConclusao;
+            tarefa.DataLimiteExecucao = viewModel.DataLimiteExecucao;
             tarefa.StatusTarefa = viewModel.StatusTarefa;
             tarefa.GestorId = viewModel.GestorId;
             tarefa.UsuarioId = viewModel.UsuarioId; 
@@ -26,8 +25,7 @@ namespace WebManagementSystem.Mappers
 
             viewModel.Id = tarefa.Id;
             viewModel.Messagem = tarefa.Messagem;
-            viewModel.DataCriacao = tarefa.DataCriacao;
-            viewModel.DataConclusao = tarefa.DataConclusao;
+            viewModel.DataLimiteExecucao = tarefa.DataLimiteExecucao;
             viewModel.StatusTarefa = tarefa.StatusTarefa;
             viewModel.GestorId = tarefa.GestorId;
             viewModel.UsuarioId = tarefa.UsuarioId;
