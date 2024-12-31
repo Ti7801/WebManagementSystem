@@ -1,12 +1,15 @@
 using BibliotecaBusiness.Abstractions;
 using BibliotecaBusiness.Services;
 using BibliotecaData.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configuração do banco de dados
 
 builder.Services.AddDbContext<AppDbContext>(
     (DbContextOptionsBuilder optionsBuilder) =>
@@ -23,6 +26,32 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
 builder.Services.AddScoped<TarefaService>();
 
+
+// Adicionar o Identity com a injeção de dependência
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    // Configurações de senha
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+
+    // Configurações de bloqueio de conta
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // Configurações de cookie de login
+    options.SignIn.RequireConfirmedAccount = false; // Definir como true se você quiser confirmação de conta por e-mail
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders(); // Para recuperação de senha e confirmação de e-mail
+
+
+// Configuração MVC
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,10 +67,20 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Ativar autenticação
+app.UseAuthorization(); // Ativar autorização
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+
+using (var scope = app.Services.CreateScope())
+{
+    var rolesManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    await ApplicationSetup.Setup(rolesManager, userManager);
+}
+
+await app.RunAsync();
+
