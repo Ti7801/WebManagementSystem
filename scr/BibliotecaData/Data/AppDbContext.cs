@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 namespace BibliotecaData.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Tarefa> Tarefas { get; set; }
