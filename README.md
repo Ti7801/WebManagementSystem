@@ -44,7 +44,7 @@ Bem-vindo(a) ao repositório do **Sistema de Gestão Web**! 🚀 Este é um sist
 - **Tecnologias Utilizadas**:  
   - **Backend**: ASP.NET Core 8.0 ⚙️  
   - **Banco de Dados**: SQL Server 2022 🗄️  
-  - **Frontend**: HTML, CSS, JavaScript 🎨  
+  - **Frontend**: MVC  ASP.NET Core 🎨  
 
 ---
 
