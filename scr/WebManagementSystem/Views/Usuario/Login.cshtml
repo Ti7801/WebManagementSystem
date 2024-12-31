@@ -1,0 +1,21 @@
+﻿@model WebManagementSystem.ViewModels.LoginUserViewModel
+
+<h3>Login do Usuário</h3>
+
+<form asp-action="Login" asp-antiforgery="true" method="post">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" placeholder="Informe o Email" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Senha"></label>
+        <input asp-for="Senha" class="form-control" placeholder="Informe o Senha" />
+    </div>
+
+    </br>
+
+    <div>
+        <input type="submit" value="Enviar" class="btn btn-primary" />
+    </div>
+</form>
