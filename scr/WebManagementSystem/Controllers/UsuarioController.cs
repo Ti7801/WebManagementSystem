@@ -96,8 +96,8 @@ namespace WebManagementSystem.Controllers
 
             return RedirectToAction("Index", "Usuario");
         }
-    
 
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
         public ActionResult<Usuario> ConsultarUsuario(Guid id) 
         {
@@ -118,29 +118,42 @@ namespace WebManagementSystem.Controllers
         }
 
 
-        //[AllowAnonymous]
-        //[HttpPost("login")]
-        //public async Task<ActionResult> Login(LoginUserViewModel loginUser)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return ValidationProblem(ModelState);
-        //    }
+        public ActionResult Login()
+        {
+            return View();
+        }
 
-        //    IdentityUser? user = await _userManager.FindByEmailAsync(loginUser.Email);
-        //    if (user == null)
-        //        return Problem("Usuário ou senha incorretos");
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(loginUser);
+            }
+            //Verificação do Email!
+            IdentityUser? user = await userManager.FindByEmailAsync(loginUser.Email);
 
-        //    var result = await _signInManager.PasswordSignInAsync(user, loginUser.Password, false, true);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Usuário ou senha incorretos");
+                return View(loginUser); 
+            }
+            //Verificação da Senha!
+            var result = await signInManager.PasswordSignInAsync(user, loginUser.Senha, false, true);
 
-        //    if (result.Succeeded)
-        //    {
-        //        _logger.LogInformation("Login bem-sucedido para o email {Email}", loginUser.Email);
-        //        return Ok(await jwtGeneratorService.GenerateJwtAsync(user));
-        //    }
+            if(result.Succeeded)
+            { //Autenticação concluida!
+                logger.LogInformation("Login bem-sucedido para o email {Email}", loginUser.Email);
+                return View(loginUser);  
+            }
+            else
+            { //Autenticação Falha!
+                logger.LogWarning("Falha no login: usuário ou senha incorretos para o email {Email}", loginUser.Email);
+                ModelState.AddModelError( string.Empty, "Usuário ou senha incorretos");
+            }
 
-        //    _logger.LogWarning("Falha no login: usuário ou senha incorretos para o email {Email}", loginUser.Email);
-        //    return Problem("Usuário ou senha incorretos");
-        //}
+            return RedirectToAction("", "") ;
+        }
     }
 }
