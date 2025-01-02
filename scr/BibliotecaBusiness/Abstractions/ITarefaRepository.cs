@@ -5,6 +5,8 @@ namespace BibliotecaBusiness.Abstractions
     public interface ITarefaRepository
     {
         public void AdicionarTarefa(Tarefa tarefa);
-        public Tarefa? ObterTarefa(Guid id);
+        public List<Tarefa>? ObterTarefasPorUsuarioGestor(Guid id);
+        public Tarefa? ObterTarefaPorId(Guid id);
+        public void AtualizarTarefa(Tarefa tarefa);
     }
 }
