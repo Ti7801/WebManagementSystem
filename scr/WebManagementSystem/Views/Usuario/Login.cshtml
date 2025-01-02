@@ -3,6 +3,7 @@
 <h3>Login do Usuário</h3>
 
 <form asp-action="Login" asp-antiforgery="true" method="post">
+    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.Query["ReturnUrl"]" />
     <div class="form-group">
         <label asp-for="Email"></label>
         <input asp-for="Email" class="form-control" placeholder="Informe o Email" />
@@ -13,7 +14,7 @@
         <input asp-for="Senha" class="form-control" placeholder="Informe o Senha" />
     </div>
 
-    </br>
+    <br/>
 
     <div>
         <input type="submit" value="Enviar" class="btn btn-primary" />
