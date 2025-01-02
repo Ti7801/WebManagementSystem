@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WebManagementSystem.ViewModels.TarefaViewModel>
+
+<h2>Lista de Tarefas</h2>
+
+<br />
+
+<h3>Pendentes</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensagem</th>
+            <th>Data Limite de Execução</th>
+            <th>Status</th>
+            <th>Gestor ID</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarefa in Model.Where(x => x.StatusTarefa == BibliotecaBusiness.Models.StatusTarefa.pendente))
+        {
+            <tr>
+                <td>@tarefa.Messagem</td>
+                <td>@tarefa.DataLimiteExecucao.ToString("dd/MM/yyyy")</td>
+                <td>@tarefa.StatusTarefa</td>
+                <td>@tarefa.GestorId</td>
+                <td>
+                    <form action="/Tarefa/AlterarStatusDaTarefa" method="post">
+                        <input type="hidden" name="id" value="@tarefa.Id" />
+                        <input type="hidden" name="statusTarefa" value="andamento" />
+                        <button type="submit" class="btn btn-primary">Mover para Em Andamento</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+<h3>Em Andamento</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensagem</th>
+            <th>Data Limite de Execução</th>
+            <th>Status</th>
+            <th>Gestor ID</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarefa in Model.Where(x => x.StatusTarefa == BibliotecaBusiness.Models.StatusTarefa.andamento))
+        {
+            <tr>
+                <td>@tarefa.Messagem</td>
+                <td>@tarefa.DataLimiteExecucao.ToString("dd/MM/yyyy")</td>
+                <td>@tarefa.StatusTarefa</td>
+                <td>@tarefa.GestorId</td>
+                <td>
+                    <form action="/Tarefa/AlterarStatusDaTarefa" method="post">
+                        <input type="hidden" name="id" value="@tarefa.Id" />
+                        <input type="hidden" name="statusTarefa" value="concluida" />
+                        <button type="submit" class="btn btn-success"> Mover para Concluir</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+<h3>Concluída</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Mensagem</th>
+            <th>Data Limite de Execução</th>
+            <th>Status</th>
+            <th>Gestor ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarefa in Model.Where(x => x.StatusTarefa == BibliotecaBusiness.Models.StatusTarefa.concluida))
+        {
+            <tr>
+                <td>@tarefa.Messagem</td>
+                <td>@tarefa.DataLimiteExecucao.ToString("dd/MM/yyyy")</td>
+                <td>@tarefa.StatusTarefa</td>
+                <td>@tarefa.GestorId</td>
+            </tr>
+        }
+    </tbody>
+</table>
