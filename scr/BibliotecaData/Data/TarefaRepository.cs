@@ -1,4 +1,5 @@
 ﻿using BibliotecaBusiness.Abstractions;
+using BibliotecaBusiness.Exceptions;
 using BibliotecaBusiness.Models;
 
 namespace BibliotecaData.Data
@@ -18,12 +19,39 @@ namespace BibliotecaData.Data
             appDbContext.SaveChanges(); 
         }
 
-        public Tarefa? ObterTarefa(Guid id)
+        public List<Tarefa>? ObterTarefasPorUsuarioGestor(Guid gestorId)
         {
-            Tarefa? tarefa = appDbContext.Tarefas.Where(x => x.Id == id).SingleOrDefault(); 
+            List<Tarefa> tarefas = appDbContext.Tarefas.Where(x => x.GestorId == gestorId).ToList(); 
+
+            return tarefas;
+        }
+
+        public Tarefa? ObterTarefaPorId(Guid id)
+        {
+            Tarefa? tarefa = appDbContext.Tarefas.SingleOrDefault(tarefa => tarefa.Id == id);
 
             return tarefa;
         }
 
+        public void AtualizarTarefa(Tarefa tarefa)
+        {
+            Tarefa? tarefaPesquisada = ObterTarefaPorId(tarefa.Id);
+
+            if (tarefaPesquisada == null)
+            {
+                const string message = "Identificação da tarefa não encontrada";
+                throw new TarefaNaoEncontradaException(message);
+            }
+
+            tarefaPesquisada.Id = tarefa.Id;
+            tarefaPesquisada.Messagem = tarefa.Messagem;
+            tarefaPesquisada.DataLimiteExecucao = tarefa.DataLimiteExecucao;
+            tarefaPesquisada.StatusTarefa = tarefa.StatusTarefa;
+            tarefaPesquisada.GestorId = tarefa.GestorId;
+            tarefaPesquisada.UsuarioId = tarefa.UsuarioId;  
+
+            appDbContext.Update(tarefaPesquisada);
+            appDbContext.SaveChanges();
+        }
     }
 }
