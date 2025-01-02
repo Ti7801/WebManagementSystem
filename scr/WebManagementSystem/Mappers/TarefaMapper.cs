@@ -33,5 +33,19 @@ namespace WebManagementSystem.Mappers
             return viewModel;
         }
 
+        public static List<TarefaViewModel> Map(List<Tarefa> tarefas)
+        {
+            List<TarefaViewModel> viewModels = new List<TarefaViewModel>();
+
+            foreach (var tarefa in tarefas)
+            {           
+                TarefaViewModel viewModel =  Map(tarefa);
+
+                viewModels.Add(viewModel);                                           
+            }
+
+            return viewModels;
+        }
+
     }
 }
