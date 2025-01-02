@@ -6,46 +6,48 @@ namespace BibliotecaBusiness.Services
     public static class ApplicationSetup
     {
 
-        public static async Task Setup(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public static async Task Setup(RoleManager<IdentityRole<Guid>> roleManager, UserManager<IdentityUser<Guid>> userManager)
         {
             await CreateDefaultRolesAsync(roleManager);
             await CreateDefaultUserAsync(userManager);
         }
 
 
-        private static async Task CreateDefaultRolesAsync(RoleManager<IdentityRole> roleManager)
+        private static async Task CreateDefaultRolesAsync(RoleManager<IdentityRole<Guid>> roleManager)
         {
-            IdentityRole? superAdminRole = await roleManager.FindByNameAsync("GestorAdmin");
+            IdentityRole<Guid>? superAdminRole = await roleManager.FindByNameAsync("GestorAdmin");
             if (superAdminRole == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("GestorAdmin"));
+                await roleManager.CreateAsync(new IdentityRole<Guid>("GestorAdmin"));
             }
 
-            IdentityRole? gestorRole = await roleManager.FindByNameAsync("Gestor");
+            IdentityRole<Guid>? gestorRole = await roleManager.FindByNameAsync("Gestor");
             if (superAdminRole == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Gestor"));
+                await roleManager.CreateAsync(new IdentityRole<Guid>("Gestor"));
             }
 
-            IdentityRole? subordinadoRole = await roleManager.FindByNameAsync("Subordinado");
+            IdentityRole<Guid>? subordinadoRole = await roleManager.FindByNameAsync("Subordinado");
             if (subordinadoRole == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Subordinado"));
+                await roleManager.CreateAsync(new IdentityRole<Guid>("Subordinado"));
             }
         }
 
-        private static async Task CreateDefaultUserAsync(UserManager<IdentityUser> userManager)
+        private static async Task CreateDefaultUserAsync(UserManager<IdentityUser<Guid>> userManager)
         {
             string userEmail = "oportunidades@smn.com.br";
 
-            IdentityUser? user = await userManager.FindByNameAsync(userEmail);
+            IdentityUser<Guid>? user = await userManager.FindByNameAsync(userEmail);
 
             if (user == null) 
             {
-                var identityUser = new IdentityUser()
+                var identityUser = new IdentityUser<Guid>()
                 {
+                    Id = Guid.NewGuid(),
                     UserName = "GestorOperacional",
                     Email = userEmail,
+                    EmailConfirmed = true
                 };
 
                 IdentityResult result = await userManager.CreateAsync(identityUser, "teste123");
