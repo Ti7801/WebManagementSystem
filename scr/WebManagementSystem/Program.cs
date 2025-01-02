@@ -28,7 +28,7 @@ builder.Services.AddScoped<TarefaService>();
 
 
 // Adicionar o Identity com a injeção de dependência
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(options =>
 {
     // Configurações de senha
     options.Password.RequireDigit = false;
@@ -44,9 +44,27 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
     // Configurações de cookie de login
     options.SignIn.RequireConfirmedAccount = false; // Definir como true se você quiser confirmação de conta por e-mail
+
+    // Configurações a identidade para permitir espaços no UserName
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; // Adicionando o espaço
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders(); // Para recuperação de senha e confirmação de e-mail
+
+
+// Configuração do middleware de cookies
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/usuario/login"; // Define a rota de login
+    options.LogoutPath = "/usuario/logout"; // Define a rota de logout (opcional)
+    options.AccessDeniedPath = "/usuario/accessdenied"; // Define a rota para acesso negado (opcional)
+
+    // Outras configurações de cookies
+    options.Cookie.Name = "WebManagementCookie";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.SlidingExpiration = true;
+    options.Cookie.SameSite = SameSiteMode.None;
+});
 
 
 // Configuração MVC
@@ -77,8 +95,8 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
-    var rolesManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var rolesManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser<Guid>>>();
     await ApplicationSetup.Setup(rolesManager, userManager);
 }
 
