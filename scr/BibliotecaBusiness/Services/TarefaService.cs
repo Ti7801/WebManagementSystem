@@ -22,6 +22,7 @@ namespace BibliotecaBusiness.Services
 
             try
             {
+                tarefa.StatusTarefa = StatusTarefa.pendente;
                 tarefaRepository.AdicionarTarefa(tarefa);
                 serviceResult.Success = true;
             }
@@ -34,14 +35,14 @@ namespace BibliotecaBusiness.Services
             return serviceResult;
         }
 
-        public ServiceResult<Tarefa> ConsultarTarefa(Guid id)
+        public ServiceResult<List<Tarefa>?> ConsultarTarefasPorGestor(Guid usuarioId)
         {
-            ServiceResult<Tarefa> serviceResult = new ServiceResult<Tarefa>();
+            ServiceResult<List<Tarefa>?> serviceResult = new ServiceResult<List<Tarefa>?>();
 
             try
             {
-                Tarefa? tarefa = tarefaRepository.ObterTarefa(id);
-                serviceResult.Value = tarefa;
+                List<Tarefa>? tarefas = tarefaRepository.ObterTarefasPorUsuarioGestor(usuarioId);
+                serviceResult.Value = tarefas;
                 serviceResult.Success = true;
                 return serviceResult;
             }
@@ -51,6 +52,41 @@ namespace BibliotecaBusiness.Services
                 serviceResult.Success = false;
                 return serviceResult;
             }
+        }
+
+        
+        public ServiceResult MudarStatusDaTarefa(Guid id, StatusTarefa statusTarefa)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+
+            try
+            {
+                Tarefa? tarefa = tarefaRepository.ObterTarefaPorId(id);
+
+                if (tarefa == null)
+                {
+                    serviceResult.Erros.Add($"Não existe a tarefa de {id} correspondente");
+                    serviceResult.Success = false;
+
+                    return serviceResult;
+                }
+
+                tarefa.Id = id;
+                tarefa.StatusTarefa = statusTarefa;
+
+                tarefaRepository.AtualizarTarefa(tarefa);
+                serviceResult.Success = true;
+
+                return serviceResult;
+            }
+            catch (Exception e) 
+            {
+                logger.LogError(e.ToString());
+                serviceResult.Success= false;
+                serviceResult.Erros.Add(e.ToString());
+
+                return serviceResult;
+            }            
         }
     }
 }
