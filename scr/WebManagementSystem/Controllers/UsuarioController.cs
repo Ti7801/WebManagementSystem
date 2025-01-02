@@ -11,13 +11,13 @@ namespace WebManagementSystem.Controllers
     public class UsuarioController : Controller
     {
         private readonly UsuarioService usuarioService;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager; 
+        private readonly UserManager<IdentityUser<Guid>> userManager;
+        private readonly SignInManager<IdentityUser<Guid>> signInManager; 
         private readonly ILogger<UsuarioController> logger;
 
         public UsuarioController(UsuarioService usuarioService,
-                                 UserManager<IdentityUser> userManager,
-                                 SignInManager<IdentityUser> signInManager, 
+                                 UserManager<IdentityUser<Guid>> userManager,
+                                 SignInManager<IdentityUser<Guid>> signInManager, 
                                  ILogger<UsuarioController> logger)
         {
             this.usuarioService = usuarioService;
@@ -42,16 +42,16 @@ namespace WebManagementSystem.Controllers
                 return View(usuarioViewModel);
             }
 
-            var user = new IdentityUser
-            {
+            var identityUser = new IdentityUser<Guid>
+            {   
+                Id = Guid.NewGuid(),
                 UserName = usuarioViewModel.Nome,
                 PhoneNumber = usuarioViewModel.Telefone,
                 Email = usuarioViewModel.Email,
                 EmailConfirmed = true
             };
 
-            var result = await userManager.CreateAsync(user, usuarioViewModel.Senha);
-
+            var result = await userManager.CreateAsync(identityUser, usuarioViewModel.Senha);
 
             if (!result.Succeeded)
             {
@@ -65,7 +65,7 @@ namespace WebManagementSystem.Controllers
 
             if (usuarioViewModel.EhGestor)
             {
-                var rolesResult = await userManager.AddToRoleAsync(user, "GestorAdmin");
+                var rolesResult = await userManager.AddToRoleAsync(identityUser, "GestorAdmin");
 
                 if (!rolesResult.Succeeded)
                 {
@@ -75,7 +75,7 @@ namespace WebManagementSystem.Controllers
             }
             else
             {
-                var rolesResult = await userManager.AddToRoleAsync(user, "subordinado");
+                var rolesResult = await userManager.AddToRoleAsync(identityUser, "subordinado");
 
                 if (!rolesResult.Succeeded)
                 {
@@ -83,9 +83,10 @@ namespace WebManagementSystem.Controllers
                     return View(usuarioViewModel);
                 }
             }
-     
+
             Usuario usuario = UsuarioMapper.Map(usuarioViewModel);
-            
+            usuario.Id = identityUser.Id;
+
             ServiceResult serviceResult = usuarioService.CadastrarUsuario(usuario);
 
             if (!serviceResult.Success)
@@ -94,29 +95,27 @@ namespace WebManagementSystem.Controllers
                 return View(usuarioViewModel);
             }
 
-            return RedirectToAction("Index", "Usuario");
+            return RedirectToAction("CadastrarUsuario", "Usuario");
         }
 
         [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
-        public ActionResult<Usuario> ConsultarUsuario(Guid id) 
+        public ActionResult<Usuario> ConsultarUsuario(UsuarioViewModel usuarioViewModel) 
         {
-
-            ServiceResult<Usuario> serviceResult = usuarioService.ConsultarUsuario(id);
+            ServiceResult<Usuario> serviceResult = usuarioService.ConsultarUsuario(usuarioViewModel.Id);
 
             if (serviceResult.Success)
             {
                 if(serviceResult.Value == null)
-                    return NotFound();
+                    return View(usuarioViewModel);
                 else
                     return Ok(serviceResult.Value);
             }
             else
             {
-                return Problem();
+                return View(usuarioViewModel);
             }
         }
-
 
         public ActionResult Login()
         {
@@ -125,14 +124,14 @@ namespace WebManagementSystem.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        public async Task<ActionResult> Login(LoginUserViewModel loginUser, string? returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
                 return View(loginUser);
             }
             //Verificação do Email!
-            IdentityUser? user = await userManager.FindByEmailAsync(loginUser.Email);
+            IdentityUser<Guid>? user = await userManager.FindByEmailAsync(loginUser.Email);
 
             if (user == null)
             {
@@ -140,12 +139,21 @@ namespace WebManagementSystem.Controllers
                 return View(loginUser); 
             }
             //Verificação da Senha!
-            var result = await signInManager.PasswordSignInAsync(user, loginUser.Senha, false, true);
+            var result = await signInManager.PasswordSignInAsync(user, loginUser.Senha, true, true);
 
             if(result.Succeeded)
             { //Autenticação concluida!
                 logger.LogInformation("Login bem-sucedido para o email {Email}", loginUser.Email);
-                return View(loginUser);  
+
+                if(returnUrl == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return Redirect(returnUrl);
+                }
+                
             }
             else
             { //Autenticação Falha!
@@ -153,7 +161,14 @@ namespace WebManagementSystem.Controllers
                 ModelState.AddModelError( string.Empty, "Usuário ou senha incorretos");
             }
 
-            return RedirectToAction("", "") ;
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult>  Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home"); // Redirecione para a página inicial ou outra página desejada
         }
     }
 }
