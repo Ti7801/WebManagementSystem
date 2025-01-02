@@ -1,6 +1,8 @@
 ﻿using BibliotecaBusiness.Models;
 using BibliotecaBusiness.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WebManagementSystem.Mappers;
 using WebManagementSystem.ViewModels;
 
@@ -9,10 +11,10 @@ namespace WebManagementSystem.Controllers
     public class TarefaController : Controller
     {
         private readonly TarefaService tarefaService;
-
+        
         public TarefaController(TarefaService tarefaService)
         {
-            this.tarefaService = tarefaService; 
+            this.tarefaService = tarefaService;              
         }
 
         [HttpGet]
@@ -26,8 +28,7 @@ namespace WebManagementSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var erros = ModelState.Values.SelectMany(u => u.Errors).Select(erros => erros.ErrorMessage);
-                return BadRequest(erros);
+                return View(tarefaViewModel);
             }
 
             Tarefa tarefa = TarefaMapper.Map(tarefaViewModel);   
@@ -36,30 +37,69 @@ namespace WebManagementSystem.Controllers
 
             if (!serviceResult.Success)
             {
-                return BadRequest(serviceResult.Erros);
+                ModelState.AddModelError(string.Empty, string.Join(",", serviceResult.Erros));
+                return View(tarefaViewModel);
             }
 
             TarefaViewModel viewModel = TarefaMapper.Map(tarefa);
 
-            return viewModel;
+            return RedirectToAction("CadastrarTarefa", "Tarefa");
         }
 
+
+        [Authorize(Roles = "GestorAdmin, Gestor" )]
         [HttpGet]
-        public ActionResult ConsultarTarefa(Guid id)
+        public ActionResult<List<TarefaViewModel>> ConsultarTarefas()
         {
-            ServiceResult<Tarefa> serviceResult = tarefaService.ConsultarTarefa(id);
+            string? userId = (User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Usuário não atenticado");  
+            }
+
+            Guid gestorId;
+
+            if (!Guid.TryParse(userId, out gestorId))
+            {
+                return BadRequest("O ID do usuário inválido.");
+            }
+
+            ServiceResult<List<Tarefa>?> serviceResult = tarefaService.ConsultarTarefasPorGestor(gestorId);
 
             if (serviceResult.Success)
             {
                 if (serviceResult.Value == null)
-                    return NotFound();
+                    return View(null);
                 else
-                    return Ok(serviceResult.Value);
+                {
+                    List<TarefaViewModel> viewModel = TarefaMapper.Map(serviceResult.Value);
+                    return View(viewModel);
+                }                  
             }
             else
             {
-                return Problem();
+                return View("Error");            
             }
         }
+
+        [HttpPost]
+        public ActionResult AlterarStatusDaTarefa(Guid id, StatusTarefa statusTarefa)
+        {
+
+            ServiceResult serviceResult = tarefaService.MudarStatusDaTarefa(id, statusTarefa);
+
+            if (serviceResult.Success)
+            {
+                return RedirectToAction("ConsultarTarefas", "Tarefa");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+
+
     }
 }
