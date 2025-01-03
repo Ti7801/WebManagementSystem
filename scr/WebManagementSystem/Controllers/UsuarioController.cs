@@ -26,14 +26,14 @@ namespace WebManagementSystem.Controllers
             this.logger = logger;   
         }
 
-        
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
         public ActionResult CadastrarUsuario()
         {
               return View();
         }
 
-        [Authorize(Roles = "GestorAdmin")]
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpPost]
         public async Task<ActionResult> CadastrarUsuario(UsuarioViewModel usuarioViewModel)
         {
@@ -163,7 +163,7 @@ namespace WebManagementSystem.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult>  Logout()
         {
