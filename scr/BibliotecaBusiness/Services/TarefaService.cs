@@ -88,6 +88,26 @@ namespace BibliotecaBusiness.Services
                 return serviceResult;
             }            
         }
+
+
+        public ServiceResult<List<Tarefa>?> ConsultarTarefaPorUsuario(Guid usuarioId)
+        {
+            ServiceResult<List<Tarefa>?> serviceResult = new ServiceResult<List<Tarefa>?>();
+
+            try
+            {
+                List<Tarefa>? tarefas = tarefaRepository.ObterTarefaPorUsuario(usuarioId);
+                serviceResult.Value = tarefas;
+                serviceResult.Success = true;
+                return serviceResult;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.ToString());
+                serviceResult.Success = false;
+                return serviceResult;
+            }
+        } 
     }
 }
 
