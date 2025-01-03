@@ -18,8 +18,6 @@ namespace WebManagementSystem.ViewModels
         [Required]
         public string Endereco { get; set; }
         [Required]
-        public string Foto { get; set; }
-        [Required]
         public string Senha { get; set; }
         [Required]
         public bool EhGestor { get; set; }

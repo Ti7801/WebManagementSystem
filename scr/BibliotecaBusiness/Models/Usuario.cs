@@ -11,6 +11,6 @@ namespace BibliotecaBusiness.Models
         public string Celular {  get; set; }
         public string Email { get; set; }
         public string Endereco { get; set; }
-        public string Foto { get; set; }    
+        public string Foto { get; set; } = string.Empty;
     }
 }
