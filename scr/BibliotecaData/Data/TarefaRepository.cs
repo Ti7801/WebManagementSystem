@@ -33,6 +33,14 @@ namespace BibliotecaData.Data
             return tarefa;
         }
 
+        public List<Tarefa>? ObterTarefaPorUsuario(Guid usuarioId)
+        {
+            List<Tarefa>? tarefas = appDbContext.Tarefas.Where(x => x.UsuarioId == usuarioId).ToList();
+
+            return tarefas;
+        }
+
+
         public void AtualizarTarefa(Tarefa tarefa)
         {
             Tarefa? tarefaPesquisada = ObterTarefaPorId(tarefa.Id);
