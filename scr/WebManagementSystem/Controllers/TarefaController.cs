@@ -17,12 +17,14 @@ namespace WebManagementSystem.Controllers
             this.tarefaService = tarefaService;              
         }
 
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
         public ActionResult CadastrarTarefa()
         {
             return View();
         }
 
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpPost] 
         public ActionResult<TarefaViewModel> CadastrarTarefa(TarefaViewModel tarefaViewModel)
         {
@@ -47,7 +49,7 @@ namespace WebManagementSystem.Controllers
         }
 
 
-        [Authorize(Roles = "GestorAdmin, Gestor" )]
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
         public ActionResult<List<TarefaViewModel>> ConsultarTarefas()
         {
@@ -83,6 +85,7 @@ namespace WebManagementSystem.Controllers
             }
         }
 
+        [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpPost]
         public ActionResult AlterarStatusDaTarefa(Guid id, StatusTarefa statusTarefa)
         {
@@ -98,8 +101,5 @@ namespace WebManagementSystem.Controllers
                 return View("Error");
             }
         }
-
-
-
     }
 }
