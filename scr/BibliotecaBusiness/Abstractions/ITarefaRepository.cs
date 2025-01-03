@@ -8,5 +8,6 @@ namespace BibliotecaBusiness.Abstractions
         public List<Tarefa>? ObterTarefasPorUsuarioGestor(Guid id);
         public Tarefa? ObterTarefaPorId(Guid id);
         public void AtualizarTarefa(Tarefa tarefa);
+        public List<Tarefa>? ObterTarefaPorUsuario(Guid id);
     }
 }
