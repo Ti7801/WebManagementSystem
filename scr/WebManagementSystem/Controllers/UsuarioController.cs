@@ -168,7 +168,13 @@ namespace WebManagementSystem.Controllers
         public async Task<ActionResult>  Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home"); // Redirecione para a página inicial ou outra página desejada
+            return RedirectToAction("Index", "Home"); 
+        }
+
+        [HttpGet]
+        public ActionResult accessdenied()
+        {
+            return View();  
         }
     }
 }

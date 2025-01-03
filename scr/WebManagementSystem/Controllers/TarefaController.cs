@@ -49,7 +49,7 @@ namespace WebManagementSystem.Controllers
         }
 
 
-        [Authorize(Roles = "GestorAdmin, Gestor")]
+        [Authorize(Roles = "GestorAdmin, Gestor, Subordinado")]
         [HttpGet]
         public ActionResult<List<TarefaViewModel>> ConsultarTarefas()
         {
@@ -61,13 +61,28 @@ namespace WebManagementSystem.Controllers
             }
 
             Guid gestorId;
+            Guid usuarioId;
 
             if (!Guid.TryParse(userId, out gestorId))
             {
                 return BadRequest("O ID do usuário inválido.");
             }
 
-            ServiceResult<List<Tarefa>?> serviceResult = tarefaService.ConsultarTarefasPorGestor(gestorId);
+            if (!Guid.TryParse(userId, out usuarioId))
+            {
+                return BadRequest("O ID do usuário inválido.");
+            }
+
+            ServiceResult<List<Tarefa>?> serviceResult;
+
+            if (User.IsInRole("Subordinado"))
+            {
+                serviceResult = tarefaService.ConsultarTarefaPorUsuario(usuarioId);
+            }
+            else
+            {
+                serviceResult = tarefaService.ConsultarTarefasPorGestor(gestorId);
+            }
 
             if (serviceResult.Success)
             {

@@ -20,7 +20,14 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Tarefa" asp-action="ConsultarTarefas">Tarefas</a>
+                            @if (User.IsInRole("Subordinado"))
+                            {
+                                <a class="nav-link text-dark" asp-controller="Tarefa" asp-action="ConsultarTarefas">Tarefas</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="Tarefa" asp-action="ConsultarTarefas">Tarefas</a>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Tarefa" asp-action="CadastrarTarefa"> Cadastrar Tarefas</a>
