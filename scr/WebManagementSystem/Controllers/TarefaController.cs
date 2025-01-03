@@ -100,7 +100,7 @@ namespace WebManagementSystem.Controllers
             }
         }
 
-        [Authorize(Roles = "GestorAdmin, Gestor")]
+        [Authorize(Roles = "GestorAdmin, Gestor, Subordinado")]
         [HttpPost]
         public ActionResult AlterarStatusDaTarefa(Guid id, StatusTarefa statusTarefa)
         {
