@@ -5,7 +5,7 @@ namespace BibliotecaBusiness.Mappers
 {
     public static class UsuarioMapper
     {
-        public static Usuario Map(UsuarioViewModel viewModel)
+        public static Usuario Map(UsuarioViewModel viewModel, string? path)
         {
             Usuario usuario = new Usuario();
 
@@ -16,26 +16,9 @@ namespace BibliotecaBusiness.Mappers
             usuario.Celular = viewModel.Celular;
             usuario.Email = viewModel.Email;
             usuario.Endereco = viewModel.Endereco;
-            usuario.Foto = viewModel.Foto;
+            usuario.Foto = path ?? string.Empty;
 
             return usuario;
         }
-
-        public static UsuarioViewModel Map(Usuario usuario)
-        {
-            UsuarioViewModel viewModel = new UsuarioViewModel();
-
-            viewModel.Id = usuario.Id;
-            viewModel.Nome = usuario.Nome;
-            viewModel.Nascimento = usuario.Nascimento;
-            viewModel.Telefone = usuario.Telefone;
-            viewModel.Celular = usuario.Celular;
-            viewModel.Email = usuario.Email;
-            viewModel.Endereco = usuario.Endereco;
-            viewModel.Foto = usuario.Foto;
-
-            return viewModel;
-        }
-
     }
 }
