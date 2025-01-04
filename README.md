@@ -61,6 +61,17 @@ Relacionamento:
   - `Microsoft.EntityFrameworkCore.Tools 8.0.11`
   - `Microsoft.EntityFrameworkCore.SqlServer 8.0.11`
   - `Microsoft.AspNetCore.Identity.EntityFrameworkCore 8.0.11`
+ 
+ Para configurar a string de conexão no arquivo appsettings.json, você deve adicionar uma chave para o banco de dados e fornecer a string de conexão correspondente ao seu banco de dados SQL Server. No seu arquivo appsettings.json, adicione uma seção chamada ConnectionStrings, onde você pode colocar a string de conexão do banco de dados:
+
+```{json}
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=SeuBancoDeDados;User Id=seuUsuario;Password=suaSenha;"
+  }
+}
+
+```
 
 ### 3.4 Comandos de Migrations e UpdateDatabase
 
@@ -71,6 +82,9 @@ Para a criação e configuração do banco de dados, foi utilizada a abordagem d
    O primeiro passo para gerar as migrações é criar a **migration**. O comando utilizado para isso foi:
 
 - `Add-Migration Initial -o Migrations`
+
+   Depois para geração do banco de dados é necessário o comando:
+  
 - `Update-Database`
 
 ---
