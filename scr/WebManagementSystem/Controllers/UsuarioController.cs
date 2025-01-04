@@ -84,8 +84,13 @@ namespace WebManagementSystem.Controllers
                 }
             }
 
-            Usuario usuario = UsuarioMapper.Map(usuarioViewModel);
+            //Salvar a foto e obter o caminho relativo
+            var fotoPath = await SalvarFoto(usuarioViewModel.Foto);
+
+            // Mapear o ViewModel para a entidade do domínio
+            Usuario usuario = UsuarioMapper.Map(usuarioViewModel, fotoPath);
             usuario.Id = identityUser.Id;
+            //usuario.Foto = fotoPath; // Salva o caminho relativo na entidade
 
             ServiceResult serviceResult = usuarioService.CadastrarUsuario(usuario);
 
@@ -175,6 +180,31 @@ namespace WebManagementSystem.Controllers
         public ActionResult accessdenied()
         {
             return View();  
+        }
+
+        public async Task<string?> SalvarFoto(IFormFile foto)
+        {
+            if (foto == null || foto.Length == 0)
+            {
+                return null;
+            }
+
+            //Caminho para a pasta de uploads
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            Directory.CreateDirectory(uploadsFolder); // Garante que a pasta exista
+
+            //Nome único para o arquivo  // Extrai a extensão do arquivo enviado
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(foto.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            //Salva o arquivo no sistema
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await foto.CopyToAsync(fileStream); 
+            }
+
+            // Retorna o caminho relativo Ex: uploads/arquivo.jpg
+            return Path.Combine("uploads", fileName).Replace("\\", "/");
         }
     }
 }
