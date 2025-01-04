@@ -20,6 +20,8 @@ namespace WebManagementSystem.ViewModels
         [Required]
         public string Senha { get; set; }
         [Required]
+        public IFormFile Foto { get; set; }
+        [Required]
         public bool EhGestor { get; set; }
     }
 }
