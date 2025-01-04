@@ -46,7 +46,9 @@ builder.Services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(options =>
     options.SignIn.RequireConfirmedAccount = false; // Definir como true se você quiser confirmação de conta por e-mail
 
     // Configurações a identidade para permitir espaços no UserName
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; // Adicionando o espaço
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+~àáâãäåçèéêìíîïòóôõöùúûü ";
+
+    // Adicionando o espaço
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders(); // Para recuperação de senha e confirmação de e-mail
