@@ -1,4 +1,5 @@
 ﻿using BibliotecaBusiness.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebManagementSystem.ViewModels
@@ -16,5 +17,8 @@ namespace WebManagementSystem.ViewModels
         public Guid GestorId { get; set; }
 
         public Guid? UsuarioId { get; set; }
+
+        public List<SelectListItem>? Users { get; set; }
+
     }
 }
