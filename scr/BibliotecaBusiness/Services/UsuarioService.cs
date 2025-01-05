@@ -52,5 +52,25 @@ namespace BibliotecaBusiness.Services
                 return serviceResult; 
             }
         }
+
+
+        public ServiceResult<List<Usuario>?> ObterUsuarios()
+        {
+            ServiceResult<List<Usuario>?> serviceResult = new ServiceResult<List<Usuario>?>();
+
+            try
+            {
+                List<Usuario>? usuarios = usuarioRepository.ObterListaDeUsuarios();
+                serviceResult.Value = usuarios;
+                serviceResult.Success = true;
+                return serviceResult;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e.ToString());
+                serviceResult.Success = false;
+                return serviceResult;
+            }
+        }
     }
 }
