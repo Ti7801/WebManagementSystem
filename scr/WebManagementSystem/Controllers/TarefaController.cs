@@ -1,7 +1,9 @@
 ﻿using BibliotecaBusiness.Models;
 using BibliotecaBusiness.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using WebManagementSystem.Mappers;
 using WebManagementSystem.ViewModels;
@@ -11,16 +13,54 @@ namespace WebManagementSystem.Controllers
     public class TarefaController : Controller
     {
         private readonly TarefaService tarefaService;
-        
-        public TarefaController(TarefaService tarefaService)
+        private readonly UsuarioService usuarioService;
+        private readonly UserManager<IdentityUser<Guid>> userManager;
+
+        public TarefaController(TarefaService tarefaService, UsuarioService usuarioService,
+                                UserManager<IdentityUser<Guid>> userManager)
         {
-            this.tarefaService = tarefaService;              
+            this.tarefaService = tarefaService;         
+            this.usuarioService = usuarioService;
+            this.userManager = userManager;
         }
 
         [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpGet]
-        public ActionResult CadastrarTarefa()
+        public async Task<ActionResult> CadastrarTarefa()
         {
+            ServiceResult<List<Usuario>?> usuarios = usuarioService.ObterUsuarios();
+
+            if (!usuarios.HasValue())
+            {
+                ModelState.AddModelError(string.Empty, "Não foi possível carregar os usuários.");
+                return View();
+            }
+
+            var subordinados = new List<SelectListItem>();
+
+            foreach (Usuario usuario in usuarios.Value)
+            {
+                var identityUser = await userManager.FindByIdAsync(usuario.Id.ToString());
+
+                if (identityUser != null)
+                {
+                    bool subordinado = await userManager.IsInRoleAsync(identityUser, "Subordinado");
+
+                    if (subordinado)
+                    {
+                        subordinados.Add(new SelectListItem
+                        {
+                            Value = usuario.Id.ToString(),
+                            Text = usuario.Nome
+                        });
+                    }
+                }
+
+            }
+
+            // Passando a lista de subordinados para a View
+            ViewBag.UsuariosSubordinados = subordinados;
+
             return View();
         }
 
@@ -33,7 +73,16 @@ namespace WebManagementSystem.Controllers
                 return View(tarefaViewModel);
             }
 
-            Tarefa tarefa = TarefaMapper.Map(tarefaViewModel);   
+            string? userId = (User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Usuário não atenticado");
+            }
+
+
+            Tarefa tarefa = TarefaMapper.Map(tarefaViewModel);
+            tarefa.GestorId = Guid.Parse(userId);
 
             ServiceResult serviceResult = tarefaService.CadastrarTarefa(tarefa); 
 
@@ -45,7 +94,7 @@ namespace WebManagementSystem.Controllers
 
             TarefaViewModel viewModel = TarefaMapper.Map(tarefa);
 
-            return RedirectToAction("CadastrarTarefa", "Tarefa");
+            return RedirectToAction("ConsultarTarefas", "Tarefa");
         }
 
 
