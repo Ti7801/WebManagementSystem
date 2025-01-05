@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BibliotecaBusiness.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebManagementSystem.ViewModels
 {
@@ -21,6 +23,7 @@ namespace WebManagementSystem.ViewModels
         public string Senha { get; set; }
         [Required]
         public IFormFile Foto { get; set; }
+
         [Required]
         public bool EhGestor { get; set; }
     }
