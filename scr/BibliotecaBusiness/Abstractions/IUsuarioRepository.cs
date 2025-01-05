@@ -6,5 +6,6 @@ namespace BibliotecaBusiness.Abstractions
     {
         public void AdicionarUsuario(Usuario usuario);
         public Usuario? ObterUsuario(Guid id);
+        public List<Usuario>? ObterListaDeUsuarios();
     }
 }
