@@ -1,13 +1,11 @@
 ﻿@model WebManagementSystem.ViewModels.TarefaViewModel
 
-<h3>
-    Cadastro de Tarefa
-</h3>
+<h3>Cadastro de Tarefa</h3>
 
 <form asp-action="CadastrarTarefa" asp-antiforgery="true" method="post">
     <div class="form-group">
         <label asp-for="Messagem"></label>
-        <input asp-for="Messagem" class="form-control" placeholder="Descrição" placeholder="Informe o Descrição" />
+        <input asp-for="Messagem" class="form-control" placeholder="Informe a Descrição" />
     </div>
 
     <div class="form-group">
@@ -15,19 +13,42 @@
         <input asp-for="DataLimiteExecucao" class="form-control" placeholder="Informe o Data Limite" />
     </div>
 
-    <div class="form-group">
+@*     <div class="form-group">
         <label asp-for="GestorId"></label>
         <input asp-for="GestorId" class="form-control" placeholder="Informe o ID do Gestor" />
-    </div>
+    </div> *@
 
     <div class="form-group">
-        <label asp-for="UsuarioId"></label>
-        <input asp-for="UsuarioId" class="form-control" placeholder="Informe o ID do Usuário" />
+        <label for="Users">Selecione o Subordinado</label>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle form-control" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Selecione um Subordinado
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var item in ViewBag.UsuariosSubordinados as List<SelectListItem>)
+                {
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="selectSubordinado('@item.Value', '@item.Text')">@item.Text</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <input type="hidden" asp-for="UsuarioId" id="UsuarioId" />
+        <div class="mt-2">
+            <strong>Subordinado Selecionado:</strong> <span id="selectedSubordinado">Nenhum subordinado selecionado</span>
+        </div>
     </div>
-
-    </br>
 
     <div>
         <input type="submit" value="Cadastrar" class="btn btn-primary" />
     </div>
 </form>
+
+<script>
+    function selectSubordinado(id, nome) {
+        // Atualiza o campo escondido com o ID do usuário
+        document.getElementById('UsuarioId').value = id;
+        // Atualiza o texto exibido ao usuário
+        document.getElementById('selectedSubordinado').textContent = nome;
+    }
+</script>
