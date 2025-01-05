@@ -23,5 +23,6 @@
         {
             this.Erros = new List<string>();
         }
+        public bool HasValue() => Success && Value != null;
     }
 }

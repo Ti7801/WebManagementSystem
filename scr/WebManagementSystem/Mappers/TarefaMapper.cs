@@ -14,7 +14,7 @@ namespace WebManagementSystem.Mappers
             tarefa.DataLimiteExecucao = viewModel.DataLimiteExecucao;
             tarefa.StatusTarefa = viewModel.StatusTarefa;
             tarefa.GestorId = viewModel.GestorId;
-            tarefa.UsuarioId = viewModel.UsuarioId; 
+            tarefa.UsuarioId = viewModel.UsuarioId;
 
             return tarefa;
         }
@@ -46,6 +46,5 @@ namespace WebManagementSystem.Mappers
 
             return viewModels;
         }
-
     }
 }
