@@ -26,5 +26,11 @@ namespace BibliotecaData.Data
             return usuario; 
         }
 
+        public List<Usuario>? ObterListaDeUsuarios()
+        {
+            List<Usuario>? usuarios = appDbContext.Usuarios.ToList();
+
+            return usuarios;
+        }
     }
 }
