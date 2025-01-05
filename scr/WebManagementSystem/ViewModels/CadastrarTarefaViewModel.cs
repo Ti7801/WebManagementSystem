@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebManagementSystem.ViewModels
 {
-    public class TarefaViewModel
+    public class CadastrarTarefaViewModel
     {
         public Guid Id { get; set; }
         [Required]

@@ -5,7 +5,7 @@ namespace WebManagementSystem.Mappers
 {
     public class TarefaMapper
     {
-        public static Tarefa Map(TarefaViewModel viewModel)
+        public static Tarefa Map(CadastrarTarefaViewModel viewModel)
         {
             Tarefa tarefa = new Tarefa();
 
@@ -19,9 +19,9 @@ namespace WebManagementSystem.Mappers
             return tarefa;
         }
 
-        public static TarefaViewModel Map(Tarefa tarefa)
+        public static CadastrarTarefaViewModel Map(Tarefa tarefa)
         {
-            TarefaViewModel viewModel = new TarefaViewModel();
+            CadastrarTarefaViewModel viewModel = new CadastrarTarefaViewModel();
 
             viewModel.Id = tarefa.Id;
             viewModel.Messagem = tarefa.Messagem;
@@ -33,13 +33,13 @@ namespace WebManagementSystem.Mappers
             return viewModel;
         }
 
-        public static List<TarefaViewModel> Map(List<Tarefa> tarefas)
+        public static List<CadastrarTarefaViewModel> Map(List<Tarefa> tarefas)
         {
-            List<TarefaViewModel> viewModels = new List<TarefaViewModel>();
+            List<CadastrarTarefaViewModel> viewModels = new List<CadastrarTarefaViewModel>();
 
             foreach (var tarefa in tarefas)
             {           
-                TarefaViewModel viewModel =  Map(tarefa);
+                CadastrarTarefaViewModel viewModel =  Map(tarefa);
 
                 viewModels.Add(viewModel);                                           
             }

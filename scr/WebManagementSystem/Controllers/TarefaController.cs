@@ -66,7 +66,7 @@ namespace WebManagementSystem.Controllers
 
         [Authorize(Roles = "GestorAdmin, Gestor")]
         [HttpPost] 
-        public ActionResult<TarefaViewModel> CadastrarTarefa(TarefaViewModel tarefaViewModel)
+        public ActionResult<CadastrarTarefaViewModel> CadastrarTarefa(CadastrarTarefaViewModel tarefaViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace WebManagementSystem.Controllers
                 return View(tarefaViewModel);
             }
 
-            TarefaViewModel viewModel = TarefaMapper.Map(tarefa);
+            CadastrarTarefaViewModel viewModel = TarefaMapper.Map(tarefa);
 
             return RedirectToAction("ConsultarTarefas", "Tarefa");
         }
@@ -100,7 +100,7 @@ namespace WebManagementSystem.Controllers
 
         [Authorize(Roles = "GestorAdmin, Gestor, Subordinado")]
         [HttpGet]
-        public ActionResult<List<TarefaViewModel>> ConsultarTarefas()
+        public ActionResult<List<CadastrarTarefaViewModel>> ConsultarTarefas()
         {
             string? userId = (User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -139,7 +139,7 @@ namespace WebManagementSystem.Controllers
                     return View(null);
                 else
                 {
-                    List<TarefaViewModel> viewModel = TarefaMapper.Map(serviceResult.Value);
+                    List<CadastrarTarefaViewModel> viewModel = TarefaMapper.Map(serviceResult.Value);
                     return View(viewModel);
                 }                  
             }
