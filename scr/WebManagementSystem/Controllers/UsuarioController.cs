@@ -75,7 +75,7 @@ namespace WebManagementSystem.Controllers
             }
             else
             {
-                var rolesResult = await userManager.AddToRoleAsync(identityUser, "subordinado");
+                var rolesResult = await userManager.AddToRoleAsync(identityUser, "Subordinado");
 
                 if (!rolesResult.Succeeded)
                 {
