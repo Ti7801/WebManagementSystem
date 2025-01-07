@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\uploads\147ccbc0-3660-422f-a856-7f77b9682281.PNG" />
+    <Content Remove="wwwroot\uploads\32510b7f-ef7d-450b-a6f8-5f8fd1730cb4.PNG" />
+    <Content Remove="wwwroot\uploads\391b2578-dd92-436f-9a0b-c7c642ecf7d0.jpeg" />
+    <Content Remove="wwwroot\uploads\44b01e02-6832-4602-9f35-5be5525eb9a9.png" />
+    <Content Remove="wwwroot\uploads\879c6422-2b9c-46a6-81d9-ec9d49e42bbe.jpg" />
+    <Content Remove="wwwroot\uploads\a6f7f306-9996-401b-9a03-f25c62a263ff.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
