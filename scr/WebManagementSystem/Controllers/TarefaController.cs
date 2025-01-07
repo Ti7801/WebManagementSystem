@@ -55,7 +55,6 @@ namespace WebManagementSystem.Controllers
                         });
                     }
                 }
-
             }
 
             // Passando a lista de subordinados para a View
