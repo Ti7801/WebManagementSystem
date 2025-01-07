@@ -176,7 +176,7 @@ Utilização do Razor para renderização das *Views*, garantindo uma separaçã
 
 - **Foto:** A opção de fazer upload de foto na criação de usuário e salvamento foram inseridas. Mas falta adicionar no menu de criar a tarefa a opção de escolher subordinado por nome e foto. Neste momento, aparece apenas o nome do subordinado.
 - **Notificações por E-mail:** A funcionalidade de notificações por e-mail está planejada, mas não implementada. A arquitetura modular permite que ela seja facilmente adicionada no futuro.
-- **Tailwind CSS:** O uso do Tailwind CSS e seus componentes visuais está planejado, mas não foi possível implementá-lo até o momento.
+- **Tailwind CSS:** O uso do Tailwind CSS e seus componentes visuais está planejado, mas não foi possível implementá-lo até o momento. Neste momento, é utilizado bootstrap.
 
 ---
 
