@@ -14,6 +14,12 @@
 
 👉 [**Web Management System**](https://webmanagementsystem.azurewebsites.net/)  
 
+Credenciais de Acesso:
+
+Login: oportunidades@smn.com.br
+
+Senha: teste123
+
 
 
 ## 2. Introdução
